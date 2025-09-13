@@ -40,7 +40,7 @@ const Cart = ({ isOpen, onClose }) => {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={onClose}
-            className="absolute inset-0 bg-black/50 backdrop-blur-sm"
+            className="flex-1 bg-black/50 backdrop-blur-sm"
           />
 
           {/* Cart Sidebar */}
@@ -49,13 +49,13 @@ const Cart = ({ isOpen, onClose }) => {
             animate={{ x: 0 }}
             exit={{ x: '100%' }}
             transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-            className="ml-auto w-full max-w-md bg-gray-800 border-l border-gray-700 h-full flex flex-col shadow-2xl"
+            className="ml-auto w-full max-w-sm sm:max-w-md bg-gray-800 border-l border-gray-700 h-full flex flex-col shadow-2xl"
           >
             {/* Header */}
-            <div className="flex items-center justify-between p-6 border-b border-gray-700">
+            <div className="flex items-center justify-between p-4 sm:p-6 border-b border-gray-700">
               <div className="flex items-center gap-2">
-                <ShoppingCart className="w-6 h-6 text-blue-400" />
-                <h2 className="text-xl font-bold text-white">Shopping Cart</h2>
+                <ShoppingCart className="w-5 h-5 sm:w-6 sm:h-6 text-blue-400" />
+                <h2 className="text-lg sm:text-xl font-bold text-white">Shopping Cart</h2>
                 <span className="bg-blue-500 text-white text-xs px-2 py-1 rounded-full">
                   {items.length}
                 </span>
@@ -69,7 +69,7 @@ const Cart = ({ isOpen, onClose }) => {
             </div>
 
             {/* Cart Items */}
-            <div className="flex-1 overflow-y-auto p-6">
+            <div className="flex-1 overflow-y-auto p-4 sm:p-6">
               {items.length === 0 ? (
                 <div className="text-center py-12">
                   <ShoppingBag className="w-16 h-16 text-gray-500 mx-auto mb-4" />
@@ -146,7 +146,7 @@ const Cart = ({ isOpen, onClose }) => {
 
             {/* Footer - Checkout Section */}
             {items.length > 0 && (
-              <div className="border-t border-gray-700 p-6 space-y-4">
+              <div className="border-t border-gray-700 p-4 sm:p-6 space-y-4">
                 {/* Order Summary */}
                 <div className="space-y-2">
                   <div className="flex justify-between text-gray-300">

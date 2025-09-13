@@ -248,26 +248,26 @@ const Store = () => {
 
   return (
     <div className="min-h-screen bg-gray-900 pt-20">
-      {/* Hero Section */}
-      <section className="py-16 bg-gradient-to-br from-gray-900 via-blue-900/20 to-gray-900 relative overflow-hidden">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,_#3B82F6,_transparent_50%)] opacity-10"></div>
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_bottom_right,_#06B6D4,_transparent_50%)] opacity-10"></div>
+      {/* Header */}
+      <section className="relative py-12 sm:py-16 lg:py-20 bg-gradient-to-br from-gray-900 via-blue-900 to-gray-900 overflow-hidden">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,_#3B82F6,_transparent_50%)] opacity-10"></div>
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_bottom_left,_#06B6D4,_transparent_55%)] opacity-10"></div>
         
         <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
-            className="text-center"
+            className="text-center mb-12 sm:mb-16"
           >
-            <h1 className="text-4xl md:text-6xl font-bold text-white mb-6">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-extrabold text-white mb-4 sm:mb-6 leading-tight px-4">
               Puzzle{" "}
               <span className="bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent">
                 Store
               </span>
             </h1>
-            <p className="text-xl text-gray-300 max-w-3xl mx-auto">
-              Discover our complete collection of premium jigsaw puzzles with various themes, piece counts, and difficulty levels.
+            <p className="text-base sm:text-lg lg:text-xl text-gray-300 max-w-3xl mx-auto px-4">
+              Discover thousands of challenging puzzles for every skill level. From beginner-friendly 300-piece puzzles to expert 1000-piece masterpieces.
             </p>
           </motion.div>
         </div>
@@ -276,16 +276,16 @@ const Store = () => {
       {/* Filters and Search */}
       <section className="py-8 bg-gray-800/50 border-b border-gray-700">
         <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col lg:flex-row gap-6 items-center justify-between">
+          <div className="flex flex-col lg:flex-row gap-4 lg:gap-6 items-center justify-between">
             {/* Search */}
-            <div className="relative flex-1 max-w-md">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+            <div className="relative w-full lg:w-96">
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4 sm:w-5 sm:h-5" />
               <input
                 type="text"
                 placeholder="Search puzzles..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full pl-10 pr-4 py-3 bg-gray-700 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
+                className="w-full pl-9 sm:pl-10 pr-4 py-2 sm:py-3 bg-gray-700 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 text-sm sm:text-base"
               />
             </div>
 
@@ -327,11 +327,11 @@ const Store = () => {
             </div>
 
             {/* Sort and View Options */}
-            <div className="flex items-center gap-4">
+            <div className="flex flex-col sm:flex-row items-center gap-3 sm:gap-4 w-full sm:w-auto">
               <select
                 value={sortBy}
                 onChange={(e) => setSortBy(e.target.value)}
-                className="px-4 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white focus:outline-none focus:border-blue-500"
+                className="w-full sm:w-auto px-3 sm:px-4 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white focus:outline-none focus:border-blue-500 text-sm sm:text-base"
               >
                 <option value="featured">Featured</option>
                 <option value="price-low">Price: Low to High</option>
@@ -345,13 +345,13 @@ const Store = () => {
                   onClick={() => setViewMode('grid')}
                   className={`p-2 ${viewMode === 'grid' ? 'bg-blue-600 text-white' : 'bg-gray-700 text-gray-300'}`}
                 >
-                  <Grid className="w-5 h-5" />
+                  <Grid className="w-4 h-4 sm:w-5 sm:h-5" />
                 </button>
                 <button
                   onClick={() => setViewMode('list')}
                   className={`p-2 ${viewMode === 'list' ? 'bg-blue-600 text-white' : 'bg-gray-700 text-gray-300'}`}
                 >
-                  <List className="w-5 h-5" />
+                  <List className="w-4 h-4 sm:w-5 sm:h-5" />
                 </button>
               </div>
             </div>
@@ -371,9 +371,9 @@ const Store = () => {
             </p>
           </div>
 
-          <div className={`grid gap-8 ${
+          <div className={`grid gap-4 sm:gap-6 lg:gap-8 ${
             viewMode === 'grid' 
-              ? 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4' 
+              ? 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4' 
               : 'grid-cols-1'
           }`}>
             {sortedPuzzles.map((puzzle, index) => (
@@ -394,7 +394,7 @@ const Store = () => {
                 >
                   {/* Image */}
                   <div className={`relative bg-gradient-to-br from-gray-700 to-gray-800 overflow-hidden ${
-                    viewMode === 'list' ? 'w-48 h-48' : 'aspect-square'
+                    viewMode === 'list' ? 'w-48 h-32' : 'aspect-[4/3]'
                   }`}>
                     <img
                       src={puzzle.image}
@@ -424,7 +424,7 @@ const Store = () => {
                   </div>
 
                   {/* Content */}
-                  <div className="p-6 flex-1">
+                  <div className="p-4 flex-1">
                     <div className="flex items-start justify-between mb-2">
                       <h3 className="text-xl font-bold text-white group-hover:text-blue-400 transition-colors duration-300">
                         {puzzle.title}
@@ -434,7 +434,7 @@ const Store = () => {
                       </span>
                     </div>
                     
-                    <p className="text-gray-400 text-sm mb-4 leading-relaxed">
+                    <p className="text-gray-400 text-sm mb-3 leading-relaxed line-clamp-2">
                       {puzzle.description}
                     </p>
 

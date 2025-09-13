@@ -6,19 +6,20 @@ const cartReducer = (state, action) => {
   switch (action.type) {
     case 'ADD_TO_CART':
       const existingItem = state.items.find(item => item.id === action.payload.id);
+      const quantityToAdd = action.payload.quantity || 1;
       if (existingItem) {
         return {
           ...state,
           items: state.items.map(item =>
             item.id === action.payload.id
-              ? { ...item, quantity: item.quantity + 1 }
+              ? { ...item, quantity: item.quantity + quantityToAdd }
               : item
           )
         };
       }
       return {
         ...state,
-        items: [...state.items, { ...action.payload, quantity: 1 }]
+        items: [...state.items, { ...action.payload, quantity: quantityToAdd }]
       };
 
     case 'REMOVE_FROM_CART':

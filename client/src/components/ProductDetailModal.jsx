@@ -22,9 +22,7 @@ const ProductDetailModal = ({ puzzle, isOpen, onClose }) => {
   if (!puzzle) return null;
 
   const handleAddToCart = () => {
-    for (let i = 0; i < quantity; i++) {
-      addToCart(puzzle);
-    }
+    addToCart({ ...puzzle, quantity });
     onClose();
   };
 
@@ -48,7 +46,7 @@ const ProductDetailModal = ({ puzzle, isOpen, onClose }) => {
   return (
     <AnimatePresence>
       {isOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4">
           {/* Backdrop */}
           <motion.div
             initial={{ opacity: 0 }}
@@ -63,7 +61,7 @@ const ProductDetailModal = ({ puzzle, isOpen, onClose }) => {
             initial={{ opacity: 0, scale: 0.9, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.9, y: 20 }}
-            className="relative bg-gray-800 rounded-2xl border border-gray-700 w-full max-w-6xl max-h-[90vh] overflow-hidden shadow-2xl"
+            className="relative bg-gray-800 rounded-xl sm:rounded-2xl border border-gray-700 w-full max-w-sm sm:max-w-6xl max-h-[95vh] sm:max-h-[90vh] overflow-hidden shadow-2xl"
           >
             {/* Close Button */}
             <button
@@ -75,7 +73,7 @@ const ProductDetailModal = ({ puzzle, isOpen, onClose }) => {
 
             <div className="flex flex-col lg:flex-row h-full">
               {/* Image Section */}
-              <div className="lg:w-1/2 p-6">
+              <div className="lg:w-1/2 p-3 sm:p-6">
                 <div className="space-y-4">
                   {/* Main Image */}
                   <div className="aspect-square bg-gray-700 rounded-xl overflow-hidden">
@@ -110,7 +108,7 @@ const ProductDetailModal = ({ puzzle, isOpen, onClose }) => {
               </div>
 
               {/* Details Section */}
-              <div className="lg:w-1/2 p-6 overflow-y-auto">
+              <div className="lg:w-1/2 p-3 sm:p-6 overflow-y-auto">
                 <div className="space-y-6">
                   {/* Header */}
                   <div>
@@ -124,7 +122,7 @@ const ProductDetailModal = ({ puzzle, isOpen, onClose }) => {
                         </span>
                       )}
                     </div>
-                    <h1 className="text-3xl font-bold text-white mb-2">{puzzle.title}</h1>
+                    <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold text-white mb-2">{puzzle.title}</h1>
                     <p className="text-gray-400 leading-relaxed">{puzzle.description}</p>
                   </div>
 
@@ -145,11 +143,11 @@ const ProductDetailModal = ({ puzzle, isOpen, onClose }) => {
 
                   {/* Price */}
                   <div className="flex items-center gap-3">
-                    <span className="text-3xl font-bold text-white">
+                    <span className="text-xl sm:text-2xl lg:text-3xl font-bold text-white">
                       KES {puzzle.price.toLocaleString()}
                     </span>
                     {puzzle.originalPrice > puzzle.price && (
-                      <span className="text-xl text-gray-500 line-through">
+                      <span className="text-lg sm:text-xl text-gray-500 line-through">
                         KES {puzzle.originalPrice.toLocaleString()}
                       </span>
                     )}
@@ -162,12 +160,12 @@ const ProductDetailModal = ({ puzzle, isOpen, onClose }) => {
 
                   {/* Features */}
                   <div className="space-y-3">
-                    <h3 className="text-lg font-semibold text-white">Features</h3>
-                    <div className="grid grid-cols-1 gap-3">
+                    <h3 className="text-base sm:text-lg font-semibold text-white">Features</h3>
+                    <div className="grid grid-cols-1 gap-2 sm:gap-3">
                       {features.map((feature, index) => (
                         <div key={index} className="flex items-center gap-3">
-                          <feature.icon className="w-5 h-5 text-blue-400" />
-                          <span className="text-gray-300">{feature.text}</span>
+                          <feature.icon className="w-4 h-4 sm:w-5 sm:h-5 text-blue-400" />
+                          <span className="text-sm sm:text-base text-gray-300">{feature.text}</span>
                         </div>
                       ))}
                     </div>
@@ -176,7 +174,7 @@ const ProductDetailModal = ({ puzzle, isOpen, onClose }) => {
                   {/* Quantity and Add to Cart */}
                   <div className="space-y-4">
                     <div className="flex items-center gap-4">
-                      <span className="text-white font-medium">Quantity:</span>
+                      <span className="text-sm sm:text-base text-white font-medium">Quantity:</span>
                       <div className="flex items-center bg-gray-700 rounded-lg">
                         <button
                           onClick={decrementQuantity}
@@ -184,7 +182,7 @@ const ProductDetailModal = ({ puzzle, isOpen, onClose }) => {
                         >
                           <Minus className="w-4 h-4 text-white" />
                         </button>
-                        <span className="px-4 py-2 text-white font-medium min-w-[3rem] text-center">
+                        <span className="px-3 sm:px-4 py-2 text-sm sm:text-base text-white font-medium min-w-[2.5rem] sm:min-w-[3rem] text-center">
                           {quantity}
                         </span>
                         <button
@@ -197,20 +195,20 @@ const ProductDetailModal = ({ puzzle, isOpen, onClose }) => {
                     </div>
 
                     {/* Action Buttons */}
-                    <div className="flex gap-3">
+                    <div className="flex gap-2 sm:gap-3">
                       <button
                         onClick={handleAddToCart}
                         disabled={!puzzle.inStock}
-                        className="flex-1 flex items-center justify-center gap-2 py-3 bg-gradient-to-r from-blue-600 to-cyan-600 text-white font-semibold rounded-lg hover:from-blue-700 hover:to-cyan-700 transition-all duration-300 transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
+                        className="flex-1 flex items-center justify-center gap-2 py-2 sm:py-3 bg-gradient-to-r from-blue-600 to-cyan-600 text-white font-semibold rounded-lg hover:from-blue-700 hover:to-cyan-700 transition-all duration-300 transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none text-sm sm:text-base"
                       >
-                        <ShoppingCart className="w-5 h-5" />
+                        <ShoppingCart className="w-4 h-4 sm:w-5 sm:h-5" />
                         {puzzle.inStock ? 'Add to Cart' : 'Out of Stock'}
                       </button>
-                      <button className="p-3 bg-gray-700 hover:bg-gray-600 text-white rounded-lg transition-colors">
-                        <Heart className="w-5 h-5" />
+                      <button className="p-2 sm:p-3 bg-gray-700 hover:bg-gray-600 text-white rounded-lg transition-colors">
+                        <Heart className="w-4 h-4 sm:w-5 sm:h-5" />
                       </button>
-                      <button className="p-3 bg-gray-700 hover:bg-gray-600 text-white rounded-lg transition-colors">
-                        <Share2 className="w-5 h-5" />
+                      <button className="p-2 sm:p-3 bg-gray-700 hover:bg-gray-600 text-white rounded-lg transition-colors">
+                        <Share2 className="w-4 h-4 sm:w-5 sm:h-5" />
                       </button>
                     </div>
                   </div>

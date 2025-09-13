@@ -43,7 +43,7 @@ const Features = () => {
   ];
 
   return (
-    <section id="features" className="py-20 bg-gray-800 relative overflow-hidden">
+    <section id="features" className="hidden sm:block py-20 bg-gray-800 relative overflow-hidden">
       {/* Background Effects */}
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_#374151,_transparent_70%)] opacity-50"></div>
       

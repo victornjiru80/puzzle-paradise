@@ -161,24 +161,24 @@ const Classes = () => {
                   )}
                 </div>
                 {/* Content */}
-                <div className="p-4">
+                <div className="p-3 sm:p-4">
                   <div className="flex items-start justify-between mb-2">
-                    <h3 className="text-lg font-bold text-white group-hover:text-blue-400 transition-colors duration-300">
+                    <h3 className="text-sm sm:text-base md:text-lg font-bold text-white group-hover:text-blue-400 transition-colors duration-300 flex-1 pr-2">
                       {puzzle.title}
                     </h3>
-                    <span className="text-blue-400 text-xs font-medium bg-blue-500/10 px-2 py-1 rounded">
+                    <span className="text-blue-400 text-xs font-medium bg-blue-500/10 px-1.5 sm:px-2 py-1 rounded flex-shrink-0">
                       {puzzle.pieces} pcs
                     </span>
                   </div>
                   
-                  <p className="text-gray-400 text-xs mb-3 leading-relaxed line-clamp-2">
+                  <p className="text-gray-400 text-xs mb-2 sm:mb-3 leading-relaxed line-clamp-2">
                     {puzzle.description}
                   </p>
 
                   {/* Price */}
-                  <div className="flex items-center justify-between mb-3">
-                    <div className="flex items-center space-x-1">
-                      <span className="text-lg font-bold text-white">
+                  <div className="flex items-center justify-between mb-2 sm:mb-3">
+                    <div className="flex flex-col sm:flex-row sm:items-center sm:space-x-1">
+                      <span className="text-sm sm:text-base md:text-lg font-bold text-white">
                         KES {puzzle.price.toLocaleString()}
                       </span>
                       {puzzle.originalPrice > puzzle.price && (

@@ -69,7 +69,7 @@ const Footer = () => {
 
       <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 relative">
         {/* Main Footer Content */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 lg:gap-10 mb-5">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-10 mb-8">
           {/* Brand Section */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
