@@ -147,7 +147,7 @@ const ContactForm = () => {
                       onChange={handleChange}
                       required
                       className="w-full px-3 sm:px-4 py-2 sm:py-3 bg-gray-700/50 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-colors duration-300 text-sm sm:text-base"
-                      placeholder="John Doe"
+                      placeholder="Enter your name"
                     />
                   </div>
                   <div>
@@ -162,7 +162,7 @@ const ContactForm = () => {
                       onChange={handleChange}
                       required
                       className="w-full px-3 sm:px-4 py-2 sm:py-3 bg-gray-700/50 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-colors duration-300 text-sm sm:text-base"
-                      placeholder="john@example.com"
+                      placeholder="example@email.com"
                     />
                   </div>
                 </div>

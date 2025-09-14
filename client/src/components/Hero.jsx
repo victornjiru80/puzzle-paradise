@@ -237,7 +237,7 @@ const Hero = () => {
               transition={{ duration: 0.8, delay: 0.2 }}
             >
               Welcome to{" "}
-              <span className="bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-blue-200 to-cyan-200 bg-clip-text text-transparent">
                 Puzzle Paradise
               </span>
             </motion.h1>
@@ -295,17 +295,6 @@ const Hero = () => {
           </motion.div>
         </div>
       </div>
-
-      {/* Scroll indicator */}
-      <motion.div
-        className="absolute bottom-8 left-1/2 transform -translate-x-1/2"
-        animate={{ y: [0, 10, 0] }}
-        transition={{ duration: 2, repeat: Infinity }}
-      >
-        <div className="w-6 h-10 border-2 border-gray-400 rounded-full flex justify-center">
-          <div className="w-1 h-3 bg-gray-400 rounded-full mt-2"></div>
-        </div>
-      </motion.div>
     </section>
   );
 };

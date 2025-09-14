@@ -85,9 +85,9 @@ const Footer = () => {
               >
                 <div
                   className="w-full h-full bg-zinc-900 rounded-[10px] flex items-center justify-center
-                             transform -rotate-3 transition-transform duration-300"
+                             transform -rotate-3 transition-transform duration-300 overflow-hidden"
                 >
-                  <Puzzle className="w-6 h-6 text-white" />
+                  <img src="/logo.jpg" className="w-full h-full cover" />
                 </div>
               </div>
               <h3 className="text-2xl font-bold text-white">Puzzle•Paradise</h3>
@@ -197,7 +197,7 @@ const Footer = () => {
           className="border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center"
         >
           <div className="text-gray-400 text-sm mb-4 md:mb-0">
-            &copy; 2024 Puzzle Paradise. All rights reserved.
+            &copy; {new Date().getFullYear()} Puzzle Paradise. All rights reserved.
           </div>
           <div className="flex items-center gap-6">
             <a href="#" className="text-gray-400 hover:text-blue-400 text-sm transition-colors duration-300">

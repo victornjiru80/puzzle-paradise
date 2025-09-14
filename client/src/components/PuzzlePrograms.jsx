@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ChevronLeft, ChevronRight, Brain, Clock, Users, Target, Star, Zap } from "lucide-react";
+import {  Brain, Clock, Users, Target, Star, Zap } from "lucide-react";
 
 const PuzzlePrograms = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -202,20 +202,7 @@ const PuzzlePrograms = () => {
             </AnimatePresence>
           </div>
 
-          {/* Navigation Arrows */}
-          <button
-            onClick={prevSlide}
-            className="absolute left-4 top-1/2 transform -translate-y-1/2 w-12 h-12 bg-black/50 hover:bg-black/70 rounded-full flex items-center justify-center transition-all duration-300 backdrop-blur-sm border border-gray-600 hover:border-blue-500"
-          >
-            <ChevronLeft className="w-6 h-6 text-white" />
-          </button>
-          <button
-            onClick={nextSlide}
-            className="absolute right-4 top-1/2 transform -translate-y-1/2 w-12 h-12 bg-black/50 hover:bg-black/70 rounded-full flex items-center justify-center transition-all duration-300 backdrop-blur-sm border border-gray-600 hover:border-blue-500"
-          >
-            <ChevronRight className="w-6 h-6 text-white" />
-          </button>
-
+         
           {/* Slide Indicators */}
           <div className="flex justify-center mt-8 space-x-2">
             {programs.map((_, index) => (
@@ -232,26 +219,7 @@ const PuzzlePrograms = () => {
           </div>
         </div>
 
-        {/* Program Stats */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8, delay: 0.4 }}
-          className="grid grid-cols-2 md:grid-cols-4 gap-8 mt-16"
-        >
-          {[
-            { label: "Training Programs", value: "5+" },
-            { label: "Success Rate", value: "95%" },
-            { label: "Students Trained", value: "2K+" },
-            { label: "Expert Coaches", value: "15+" }
-          ].map((stat, index) => (
-            <div key={index} className="text-center">
-              <div className="text-3xl font-bold text-white mb-2">{stat.value}</div>
-              <div className="text-gray-400 text-sm">{stat.label}</div>
-            </div>
-          ))}
-        </motion.div>
+      
       </div>
     </section>
   );
