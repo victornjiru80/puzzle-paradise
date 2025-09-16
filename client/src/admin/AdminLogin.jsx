@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Lock, User, Eye, EyeOff, Puzzle } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import { useApp } from '../context/appContext';
 
 const AdminLogin = ({ onLogin }) => {
   const [credentials, setCredentials] = useState({
@@ -12,32 +13,26 @@ const AdminLogin = ({ onLogin }) => {
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
-
-  // Simple authentication - in production, this should be handled by a backend
-  const ADMIN_CREDENTIALS = {
-    username: 'admin',
-    password: 'puzzle123'
-  };
+  const { adminLogin, loading, error: appError } = useApp();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
     setError('');
 
-    // Simulate API call delay
-    setTimeout(() => {
-      if (
-        credentials.username === ADMIN_CREDENTIALS.username &&
-        credentials.password === ADMIN_CREDENTIALS.password
-      ) {
-        localStorage.setItem('isAdminAuthenticated', 'true');
+    try {
+      const result = await adminLogin(credentials);
+      if (result.success) {
         onLogin();
         navigate('/admin/dashboard');
       } else {
-        setError('Invalid username or password');
+        setError(result.message || 'Login failed');
       }
+    } catch (err) {
+      setError('Login failed. Please try again.');
+    } finally {
       setIsLoading(false);
-    }, 1000);
+    }
   };
 
   const handleChange = (e) => {
@@ -118,13 +113,13 @@ const AdminLogin = ({ onLogin }) => {
             </div>
 
             {/* Error Message */}
-            {error && (
+            {(error || appError) && (
               <motion.div
                 initial={{ opacity: 0, y: -10 }}
                 animate={{ opacity: 1, y: 0 }}
                 className="bg-red-500/10 border border-red-500/20 rounded-lg p-3"
               >
-                <p className="text-red-400 text-sm text-center">{error}</p>
+                <p className="text-red-400 text-sm text-center">{error || appError}</p>
               </motion.div>
             )}
 
@@ -147,10 +142,9 @@ const AdminLogin = ({ onLogin }) => {
 
           {/* Demo Credentials */}
           <div className="mt-6 p-4 bg-blue-500/10 border border-blue-500/20 rounded-lg">
-            <p className="text-blue-400 text-sm text-center mb-2">Demo Credentials:</p>
+            <p className="text-blue-400 text-sm text-center mb-2">Create Admin Account First:</p>
             <p className="text-gray-300 text-xs text-center">
-              Username: <span className="font-mono">admin</span> | 
-              Password: <span className="font-mono">puzzle123</span>
+              Use the server API to create an admin account before logging in
             </p>
           </div>
 

@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { ShoppingCart, Star, Package, Clock, Eye } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
+import { useApp } from '../context/appContext';
 import ProductDetailModal from './ProductDetailModal';
 
 const Classes = () => {
@@ -10,85 +11,18 @@ const Classes = () => {
   const [selectedPuzzle, setSelectedPuzzle] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { addToCart } = useCart();
+  const { products, loading, fetchProducts } = useApp();
 
-  const puzzles = [
-    {
-      id: 1,
-      title: "Mountain Landscape",
-      description: "Breathtaking mountain scenery with crystal clear lakes and snow-capped peaks.",
-      pieces: 300,
-      price: 2450,
-      originalPrice: 2950,
-      image: "/api/placeholder/400/300",
-      category: "Adult Puzzles",
-      difficulty: "Easy",
-      inStock: true,
-      featured: true
-    },
-    {
-      id: 2,
-      title: "Colorful Mandala",
-      description: "Intricate mandala design with vibrant colors and mesmerizing patterns.",
-      pieces: 500,
-      price: 3200,
-      originalPrice: 3850,
-      image: "/api/placeholder/400/300",
-      category: "Adult Puzzles",
-      difficulty: "Medium",
-      inStock: true,
-      featured: true
-    },
-    {
-      id: 3,
-      title: "City Skyline",
-      description: "Modern city skyline at night with illuminated skyscrapers and city lights.",
-      pieces: 1000,
-      price: 4500,
-      originalPrice: 5150,
-      image: "/api/placeholder/400/300",
-      category: "Adult Puzzles",
-      difficulty: "Hard",
-      inStock: true,
-      featured: true
-    },
-    {
-      id: 4,
-      title: "Cute Farm Animals",
-      description: "Adorable collection of farm animals perfect for children to learn and enjoy.",
-      pieces: 300,
-      price: 2050,
-      originalPrice: 2550,
-      image: "/api/placeholder/400/300",
-      category: "Kids Puzzles",
-      difficulty: "Easy",
-      inStock: true,
-      featured: true
-    },
-    {
-      id: 5,
-      title: "Fairy Tale Castle",
-      description: "Magical fairy tale castle with enchanting surroundings perfect for young dreamers.",
-      pieces: 500,
-      price: 2550,
-      originalPrice: 3200,
-      image: "/api/placeholder/400/300",
-      category: "Kids Puzzles",
-      difficulty: "Medium",
-      inStock: true
-    },
-    {
-      id: 6,
-      title: "Dinosaur World",
-      description: "Exciting dinosaur adventure scene perfect for young paleontologists.",
-      pieces: 1000,
-      price: 3700,
-      originalPrice: 4350,
-      image: "/api/placeholder/400/300",
-      category: "Kids Puzzles",
-      difficulty: "Hard",
-      inStock: false
-    }
-  ];
+  // Get featured puzzles from database, filter out classes
+  const featuredPuzzles = products.filter(product => 
+    (product.type === 'puzzle' || !product.type) && product.featured
+  );
+
+  useEffect(() => {
+    // Fetch featured products when component mounts
+    fetchProducts({ type: 'puzzle', featured: true });
+  }, []);
+
 
   const handleAddToCart = (puzzle) => {
     addToCart(puzzle);
@@ -132,9 +66,22 @@ const Classes = () => {
 
         {/* Featured Puzzles Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {puzzles.filter(puzzle => puzzle.featured).slice(0, 4).map((puzzle, index) => (
+          {loading ? (
+            // Loading skeleton
+            Array.from({ length: 4 }).map((_, index) => (
+              <div key={index} className="bg-gray-800/50 backdrop-blur-sm border border-gray-700 rounded-xl overflow-hidden animate-pulse">
+                <div className="aspect-[4/3] bg-gray-700"></div>
+                <div className="p-4 space-y-3">
+                  <div className="h-4 bg-gray-700 rounded w-3/4"></div>
+                  <div className="h-3 bg-gray-700 rounded w-full"></div>
+                  <div className="h-6 bg-gray-700 rounded w-1/2"></div>
+                </div>
+              </div>
+            ))
+          ) : (
+            featuredPuzzles.slice(0, 4).map((puzzle, index) => (
             <motion.div
-              key={puzzle.id}
+              key={puzzle._id}
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
@@ -227,7 +174,8 @@ const Classes = () => {
                 </div>
               </div>
             </motion.div>
-          ))}
+            ))
+          )}
         </div>
 
         {/* Call to Action */}

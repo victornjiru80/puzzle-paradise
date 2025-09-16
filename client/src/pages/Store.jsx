@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Search, Filter, ShoppingCart, Star, Package, Eye, Grid, List } from 'lucide-react';
 import { useCart } from '../context/CartContext';
+import { useApp } from '../context/appContext';
 import ProductDetailModal from '../components/ProductDetailModal';
 
 const Store = () => {
@@ -13,200 +14,23 @@ const Store = () => {
   const [selectedPuzzle, setSelectedPuzzle] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { addToCart } = useCart();
+  const { products, loading, fetchProducts } = useApp();
 
   const categories = ['All', 'Adult Puzzles', 'Kids Puzzles'];
   const pieceCategories = ['All Pieces', '300 pieces', '500 pieces', '1000 pieces'];
 
-  const puzzles = [
-    // Adult Puzzles - 300 pieces
-    {
-      id: 1,
-      title: "Mountain Landscape",
-      description: "Breathtaking mountain scenery with crystal clear lakes and snow-capped peaks.",
-      pieces: 300,
-      price: 2450,
-      originalPrice: 2950,
-      image: "/api/placeholder/400/300",
-      category: "Adult Puzzles",
-      difficulty: "Easy",
-      inStock: true,
-      featured: true
-    },
-    {
-      id: 2,
-      title: "Ocean Sunset",
-      description: "Stunning ocean sunset with golden reflections and peaceful waves.",
-      pieces: 300,
-      price: 2300,
-      originalPrice: 2800,
-      image: "/api/placeholder/400/300",
-      category: "Adult Puzzles",
-      difficulty: "Easy",
-      inStock: true,
-      featured: false
-    },
-    // Adult Puzzles - 500 pieces
-    {
-      id: 3,
-      title: "Colorful Mandala",
-      description: "Intricate mandala design with vibrant colors and mesmerizing patterns.",
-      pieces: 500,
-      price: 3200,
-      originalPrice: 3850,
-      image: "/api/placeholder/400/300",
-      category: "Adult Puzzles",
-      difficulty: "Medium",
-      inStock: true,
-      featured: true
-    },
-    {
-      id: 4,
-      title: "Abstract Art",
-      description: "Modern abstract artwork with bold colors and geometric shapes.",
-      pieces: 500,
-      price: 3100,
-      originalPrice: 3750,
-      image: "/api/placeholder/400/300",
-      category: "Adult Puzzles",
-      difficulty: "Medium",
-      inStock: true,
-      featured: false
-    },
-    {
-      id: 5,
-      title: "Vintage World Map",
-      description: "Beautifully detailed vintage-style world map perfect for geography enthusiasts.",
-      pieces: 500,
-      price: 3450,
-      originalPrice: 4100,
-      image: "/api/placeholder/400/300",
-      category: "Adult Puzzles",
-      difficulty: "Medium",
-      inStock: false,
-      featured: false
-    },
-    // Adult Puzzles - 1000 pieces
-    {
-      id: 6,
-      title: "City Skyline",
-      description: "Modern city skyline at night with illuminated skyscrapers and city lights.",
-      pieces: 1000,
-      price: 4500,
-      originalPrice: 5150,
-      image: "/api/placeholder/400/300",
-      category: "Adult Puzzles",
-      difficulty: "Hard",
-      inStock: true,
-      featured: true
-    },
-    {
-      id: 7,
-      title: "Forest Wildlife",
-      description: "Beautiful forest scene with various wildlife in their natural habitat.",
-      pieces: 1000,
-      price: 4250,
-      originalPrice: 4900,
-      image: "/api/placeholder/400/300",
-      category: "Adult Puzzles",
-      difficulty: "Hard",
-      inStock: true,
-      featured: false
-    },
-    {
-      id: 8,
-      title: "Space Galaxy",
-      description: "Stunning galaxy view with nebulae, stars, and cosmic phenomena.",
-      pieces: 1000,
-      price: 4750,
-      originalPrice: 5550,
-      image: "/api/placeholder/400/300",
-      category: "Adult Puzzles",
-      difficulty: "Hard",
-      inStock: true,
-      featured: false
-    },
-    // Kids Puzzles - 300 pieces
-    {
-      id: 9,
-      title: "Cute Farm Animals",
-      description: "Adorable collection of farm animals perfect for children to learn and enjoy.",
-      pieces: 300,
-      price: 2050,
-      originalPrice: 2550,
-      image: "/api/placeholder/400/300",
-      category: "Kids Puzzles",
-      difficulty: "Easy",
-      inStock: true,
-      featured: true
-    },
-    {
-      id: 10,
-      title: "Cartoon Safari",
-      description: "Fun cartoon safari animals in bright colors that kids will love.",
-      pieces: 300,
-      price: 1950,
-      originalPrice: 2450,
-      image: "/api/placeholder/400/300",
-      category: "Kids Puzzles",
-      difficulty: "Easy",
-      inStock: true,
-      featured: false
-    },
-    // Kids Puzzles - 500 pieces
-    {
-      id: 11,
-      title: "Fairy Tale Castle",
-      description: "Magical fairy tale castle with enchanting surroundings perfect for young dreamers.",
-      pieces: 500,
-      price: 2550,
-      originalPrice: 3200,
-      image: "/api/placeholder/400/300",
-      category: "Kids Puzzles",
-      difficulty: "Medium",
-      inStock: true,
-      featured: false
-    },
-    {
-      id: 12,
-      title: "Underwater Adventure",
-      description: "Colorful underwater scene with friendly sea creatures and coral reefs.",
-      pieces: 500,
-      price: 2800,
-      originalPrice: 3450,
-      image: "/api/placeholder/400/300",
-      category: "Kids Puzzles",
-      difficulty: "Medium",
-      inStock: true,
-      featured: false
-    },
-    // Kids Puzzles - 1000 pieces
-    {
-      id: 13,
-      title: "Dinosaur World",
-      description: "Exciting dinosaur adventure scene perfect for young paleontologists.",
-      pieces: 1000,
-      price: 3700,
-      originalPrice: 4350,
-      image: "/api/placeholder/400/300",
-      category: "Kids Puzzles",
-      difficulty: "Hard",
-      inStock: true,
-      featured: false
-    },
-    {
-      id: 14,
-      title: "Space Adventure",
-      description: "Fun space exploration theme with rockets, planets, and friendly aliens.",
-      pieces: 1000,
-      price: 3850,
-      originalPrice: 4500,
-      image: "/api/placeholder/400/300",
-      category: "Kids Puzzles",
-      difficulty: "Hard",
-      inStock: false,
-      featured: false
-    }
-  ];
+  // Get puzzles from database, filter out classes
+  const puzzles = products.filter(product => product.type === 'puzzle' || !product.type);
+
+  useEffect(() => {
+    // Fetch products when component mounts or filters change
+    fetchProducts({ 
+      type: 'puzzle',
+      category: selectedCategory !== 'All' ? selectedCategory : undefined,
+      pieces: selectedPieceCategory !== 'All Pieces' ? selectedPieceCategory : undefined
+    });
+  }, [selectedCategory, selectedPieceCategory]);
+
 
   const filteredPuzzles = puzzles.filter(puzzle => {
     const matchesCategory = selectedCategory === 'All' || puzzle.category === selectedCategory;
@@ -371,14 +195,30 @@ const Store = () => {
             </p>
           </div>
 
-          <div className={`grid gap-4 sm:gap-6 lg:gap-8 ${
-            viewMode === 'grid' 
-              ? 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4' 
-              : 'grid-cols-1'
-          }`}>
-            {sortedPuzzles.map((puzzle, index) => (
+          {loading ? (
+            <div className="grid gap-4 sm:gap-6 lg:gap-8 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+              {Array.from({ length: 8 }).map((_, index) => (
+                <div key={index} className="bg-gray-800/50 backdrop-blur-sm border border-gray-700 rounded-xl overflow-hidden animate-pulse">
+                  <div className="aspect-[4/3] bg-gray-700"></div>
+                  <div className="p-4 space-y-3">
+                    <div className="h-4 bg-gray-700 rounded w-3/4"></div>
+                    <div className="h-3 bg-gray-700 rounded w-full"></div>
+                    <div className="h-3 bg-gray-700 rounded w-2/3"></div>
+                    <div className="h-6 bg-gray-700 rounded w-1/2"></div>
+                    <div className="h-8 bg-gray-700 rounded"></div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <div className={`grid gap-4 sm:gap-6 lg:gap-8 ${
+              viewMode === 'grid' 
+                ? 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4' 
+                : 'grid-cols-1'
+            }`}>
+              {sortedPuzzles.map((puzzle, index) => (
               <motion.div
-                key={puzzle.id}
+                key={puzzle._id}
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
@@ -485,10 +325,11 @@ const Store = () => {
                   </div>
                 </div>
               </motion.div>
-            ))}
-          </div>
+              ))}
+            </div>
+          )}
 
-          {sortedPuzzles.length === 0 && (
+          {!loading && sortedPuzzles.length === 0 && (
             <div className="text-center py-16">
               <div className="w-24 h-24 bg-gray-700 rounded-full flex items-center justify-center mx-auto mb-6">
                 <Search className="w-12 h-12 text-gray-500" />

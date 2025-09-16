@@ -11,63 +11,39 @@ import {
   Search,
   Filter,
   LogOut,
-  Home
+  Home,
+  Upload
 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import { useApp } from '../context/appContext';
 
 const AdminDashboard = ({ onLogout }) => {
   const navigate = useNavigate();
-  const [puzzles, setPuzzles] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [filterCategory, setFilterCategory] = useState('All');
   const [showAddModal, setShowAddModal] = useState(false);
   const [editingPuzzle, setEditingPuzzle] = useState(null);
+  
+  const { 
+    products, 
+    loading, 
+    fetchProducts, 
+    createProduct, 
+    updateProduct, 
+    deleteProduct,
+    adminLogout 
+  } = useApp();
 
-  // Initialize with sample data (in production, this would come from an API)
+  // Get puzzles from products (filter out classes)
+  const puzzles = products.filter(product => product.type === 'puzzle' || !product.type);
+
   useEffect(() => {
-    const initialPuzzles = [
-      {
-        id: 1,
-        title: "Mountain Landscape",
-        description: "Breathtaking mountain scenery with crystal clear lakes and snow-capped peaks.",
-        pieces: 300,
-        price: 2450,
-        originalPrice: 2950,
-        category: "Adult Puzzles",
-        difficulty: "Easy",
-        inStock: true,
-        featured: true
-      },
-      {
-        id: 2,
-        title: "Colorful Mandala",
-        description: "Intricate mandala design with vibrant colors and mesmerizing patterns.",
-        pieces: 500,
-        price: 3200,
-        originalPrice: 3850,
-        category: "Adult Puzzles",
-        difficulty: "Medium",
-        inStock: true,
-        featured: true
-      },
-      {
-        id: 3,
-        title: "Cute Farm Animals",
-        description: "Adorable collection of farm animals perfect for children to learn and enjoy.",
-        pieces: 300,
-        price: 2050,
-        originalPrice: 2550,
-        category: "Kids Puzzles",
-        difficulty: "Easy",
-        inStock: true,
-        featured: true
-      }
-    ];
-    setPuzzles(initialPuzzles);
+    // Fetch all products when component mounts
+    fetchProducts();
   }, []);
 
-  const handleLogout = () => {
-    localStorage.removeItem('isAdminAuthenticated');
+  const handleLogout = async () => {
+    await adminLogout();
     onLogout();
     navigate('/admin/login');
   };
@@ -291,9 +267,9 @@ const AdminDashboard = ({ onLogout }) => {
                           <Edit3 className="w-4 h-4" />
                         </button>
                         <button
-                          onClick={() => {
+                          onClick={async () => {
                             if (window.confirm('Are you sure you want to delete this puzzle?')) {
-                              setPuzzles(puzzles.filter(p => p.id !== puzzle.id));
+                              await deleteProduct(puzzle._id);
                             }
                           }}
                           className="p-2 text-red-400 hover:text-red-300 hover:bg-red-500/10 rounded-lg transition-colors"
@@ -326,19 +302,13 @@ const AdminDashboard = ({ onLogout }) => {
             setShowAddModal(false);
             setEditingPuzzle(null);
           }}
-          onSave={(puzzleData) => {
+          onSave={async (puzzleData) => {
             if (editingPuzzle) {
               // Update existing puzzle
-              setPuzzles(puzzles.map(p => 
-                p.id === editingPuzzle.id ? { ...puzzleData, id: editingPuzzle.id } : p
-              ));
+              await updateProduct(editingPuzzle._id, puzzleData);
             } else {
               // Add new puzzle
-              const newPuzzle = {
-                ...puzzleData,
-                id: Math.max(...puzzles.map(p => p.id), 0) + 1
-              };
-              setPuzzles([...puzzles, newPuzzle]);
+              await createProduct(puzzleData);
             }
             setShowAddModal(false);
             setEditingPuzzle(null);
@@ -360,12 +330,39 @@ const PuzzleModal = ({ puzzle, onClose, onSave }) => {
     category: puzzle?.category || 'Adult Puzzles',
     difficulty: puzzle?.difficulty || 'Easy',
     inStock: puzzle?.inStock ?? true,
-    featured: puzzle?.featured ?? false
+    featured: puzzle?.featured ?? false,
+    type: 'puzzle'
   });
+  
+  const [imageFile, setImageFile] = useState(null);
+  const [uploading, setUploading] = useState(false);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    onSave(formData);
+    setUploading(true);
+    
+    try {
+      let finalFormData = { ...formData };
+      
+      // If there's an image file, we need to handle the upload
+      if (imageFile) {
+        const uploadFormData = new FormData();
+        uploadFormData.append('image', imageFile);
+        
+        // Add other form fields
+        Object.keys(finalFormData).forEach(key => {
+          uploadFormData.append(key, finalFormData[key]);
+        });
+        
+        await onSave(uploadFormData);
+      } else {
+        await onSave(finalFormData);
+      }
+    } catch (error) {
+      console.error('Error saving puzzle:', error);
+    } finally {
+      setUploading(false);
+    }
   };
 
   const handleChange = (e) => {
@@ -432,6 +429,34 @@ const PuzzleModal = ({ puzzle, onClose, onSave }) => {
                 className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white focus:outline-none focus:border-blue-500"
                 required
               />
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-300 mb-2">
+                Product Image
+              </label>
+              <div className="flex items-center gap-4">
+                <input
+                  type="file"
+                  accept="image/*"
+                  onChange={(e) => setImageFile(e.target.files[0])}
+                  className="hidden"
+                  id="image-upload"
+                />
+                <label
+                  htmlFor="image-upload"
+                  className="flex items-center gap-2 px-4 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white cursor-pointer hover:bg-gray-600 transition-colors"
+                >
+                  <Upload className="w-4 h-4" />
+                  Choose Image
+                </label>
+                {imageFile && (
+                  <span className="text-sm text-gray-300">{imageFile.name}</span>
+                )}
+                {puzzle?.image && !imageFile && (
+                  <span className="text-sm text-gray-400">Current image will be kept</span>
+                )}
+              </div>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -522,14 +547,16 @@ const PuzzleModal = ({ puzzle, onClose, onSave }) => {
             <div className="flex gap-4 pt-4">
               <button
                 type="submit"
-                className="flex-1 py-2 bg-gradient-to-r from-blue-600 to-cyan-600 text-white rounded-lg hover:from-blue-700 hover:to-cyan-700 transition-all duration-300"
+                disabled={uploading}
+                className="flex-1 py-2 bg-gradient-to-r from-blue-600 to-cyan-600 text-white rounded-lg hover:from-blue-700 hover:to-cyan-700 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                {puzzle ? 'Update Puzzle' : 'Add Puzzle'}
+                {uploading ? 'Saving...' : (puzzle ? 'Update Puzzle' : 'Add Puzzle')}
               </button>
               <button
                 type="button"
                 onClick={onClose}
-                className="flex-1 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors"
+                disabled={uploading}
+                className="flex-1 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors disabled:opacity-50"
               >
                 Cancel
               </button>

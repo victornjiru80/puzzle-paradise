@@ -7,6 +7,7 @@ import AdminLogin from "./admin/AdminLogin";
 import AdminDashboard from "./admin/AdminDashboard";
 import ProtectedRoute from "./admin/ProtectedRoute";
 import { CartProvider } from "./context/CartContext";
+import { AppProvider } from "./context/appContext";
 
 function App() {
   const [isAdminAuthenticated, setIsAdminAuthenticated] = useState(true);
@@ -25,41 +26,43 @@ function App() {
   };
 
   return (
-    <CartProvider>
-      <Router>
-        <div className="App">
-          <Routes>
-            {/* Public Routes */}
-            <Route path="/" element={
-              <>
-                <Navbar />
-                <Home />
-              </>
-            } />
-            <Route path="/store" element={
-              <>
-                <Navbar />
-                <Store />
-              </>
-            } />
-            
-            {/* Admin Routes */}
-            <Route 
-              path="/admin/login" 
-              element={<AdminLogin onLogin={handleAdminLogin} />} 
-            />
-            <Route 
-              path="/admin/dashboard" 
-              element={
-                <ProtectedRoute>
-                  <AdminDashboard onLogout={handleAdminLogout} />
-                </ProtectedRoute>
-              } 
-            />
-          </Routes>
-        </div>
-      </Router>
-    </CartProvider>
+    <AppProvider>
+      <CartProvider>
+        <Router>
+          <div className="App">
+            <Routes>
+              {/* Public Routes */}
+              <Route path="/" element={
+                <>
+                  <Navbar />
+                  <Home />
+                </>
+              } />
+              <Route path="/store" element={
+                <>
+                  <Navbar />
+                  <Store />
+                </>
+              } />
+              
+              {/* Admin Routes */}
+              <Route 
+                path="/admin/login" 
+                element={<AdminLogin onLogin={handleAdminLogin} />} 
+              />
+              <Route 
+                path="/admin/dashboard" 
+                element={
+                  <ProtectedRoute>
+                    <AdminDashboard onLogout={handleAdminLogout} />
+                  </ProtectedRoute>
+                } 
+              />
+            </Routes>
+          </div>
+        </Router>
+      </CartProvider>
+    </AppProvider>
   );
 }
 
