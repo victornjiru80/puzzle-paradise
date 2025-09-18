@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Lock, User, Eye, EyeOff, Puzzle } from 'lucide-react';
+import { Lock, User, Eye, EyeOff } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { useApp } from '../context/appContext';
 
@@ -58,8 +58,8 @@ const AdminLogin = ({ onLogin }) => {
         <div className="bg-gray-800/50 backdrop-blur-sm border border-gray-700 rounded-2xl p-8 shadow-2xl">
           {/* Header */}
           <div className="text-center mb-8">
-            <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-cyan-500 rounded-full flex items-center justify-center mx-auto mb-4">
-              <Puzzle className="w-8 h-8 text-white" />
+            <div className="w-16 h-16 rounded-full mx-auto mb-4 overflow-hidden shadow-md ring-2 ring-blue-500/40">
+              <img src="/logo.jpg" alt="Puzzle Paradise Logo" className="w-full h-full object-cover" />
             </div>
             <h1 className="text-3xl font-bold text-white mb-2">Admin Panel</h1>
             <p className="text-gray-400">Sign in to manage Puzzle Paradise</p>

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { motion } from "framer-motion";
-import { Menu, X, Puzzle, ShoppingCart, User } from "lucide-react";
+import { Menu, X, ShoppingCart, User } from "lucide-react";
 import { useCart } from "../context/CartContext";
 import Cart from "./Cart";
 
@@ -75,9 +75,11 @@ const Navbar = () => {
           <div className="flex justify-between items-center">
             <div className="flex-shrink-0">
               <div className="flex items-center gap-2 sm:gap-3 group">
-                <div className="h-8 w-8 sm:h-10 sm:w-10 md:h-12 md:w-12 bg-gradient-to-br from-blue-400 to-cyan-500 rounded-lg flex items-center justify-center transition-transform duration-300 group-hover:scale-110">
-                  <Puzzle className="h-4 w-4 sm:h-5 sm:w-5 md:h-6 md:w-6 text-white" />
-                </div>
+                <img
+                  src="/logo.jpg"
+                  alt="Puzzle Paradise Logo"
+                  className="h-8 w-8 sm:h-10 sm:w-10 md:h-12 md:w-12 rounded-lg object-cover transition-transform duration-300 group-hover:scale-110"
+                />
                 <span className="font-extrabold text-sm sm:text-lg md:text-xl tracking-wider text-white relative after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-gradient-to-r after:from-blue-400 after:to-cyan-500 after:transition-all after:duration-300 group-hover:after:w-full">
                   PUZZLE•PARADISE
                 </span>
