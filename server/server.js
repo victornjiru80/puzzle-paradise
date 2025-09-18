@@ -8,18 +8,28 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 connectDB();
 
-const allowedOrigins = [process.env.FRONTEND_URL, ' https://puzzle-paradise.onrender.com', 'http://localhost:5173'];
+const allowedOrigins = [
+    process.env.FRONTEND_URL,
+    'https://puzzle-paradise.onrender.com',
+    'http://localhost:5173'
+];
 
 app.use(cors({
     origin: function(origin, callback){
-        // allow requests with no origin
-          if (allowedOrigins.includes(origin) || !origin) {
+        // allow requests with no origin (like curl or server-to-server)
+        if (!origin) return callback(null, true);
+
+        const isAllowed = allowedOrigins.includes(origin)
+            || /\.vercel\.app$/.test(origin); // Allow Vercel preview domains
+
+        if (isAllowed) {
             callback(null, true);
         } else {
             callback(new Error('Not allowed by CORS'));
         }
     },
-    credentials: true}));
+    credentials: true
+}));
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
