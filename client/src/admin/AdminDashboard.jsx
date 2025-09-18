@@ -219,7 +219,7 @@ const AdminDashboard = ({ onLogout }) => {
               </thead>
               <tbody className="divide-y divide-gray-700">
                 {filteredPuzzles.map((puzzle) => (
-                  <tr key={puzzle.id} className="hover:bg-gray-700/50">
+                  <tr key={puzzle._id} className="hover:bg-gray-700/50">
                     <td className="px-6 py-4">
                       <div>
                         <div className="text-sm font-medium text-white">{puzzle.title}</div>
@@ -325,8 +325,8 @@ const PuzzleModal = ({ puzzle, onClose, onSave }) => {
     title: puzzle?.title || '',
     description: puzzle?.description || '',
     pieces: puzzle?.pieces || 300,
-    price: puzzle?.price || 0,
-    originalPrice: puzzle?.originalPrice || 0,
+    price: puzzle?.price || '',
+    originalPrice: puzzle?.originalPrice || '',
     category: puzzle?.category || 'Adult Puzzles',
     difficulty: puzzle?.difficulty || 'Easy',
     inStock: puzzle?.inStock ?? true,
@@ -369,8 +369,20 @@ const PuzzleModal = ({ puzzle, onClose, onSave }) => {
     const { name, value, type, checked } = e.target;
     setFormData(prev => ({
       ...prev,
-      [name]: type === 'checkbox' ? checked : type === 'number' ? Number(value) : value
+      [name]: type === 'checkbox' ? checked : type === 'number' ? (value === '' ? '' : Number(value)) : value
     }));
+  };
+
+  const handleFocus = (e) => {
+    if (e.target.name === 'price' || e.target.name === 'originalPrice') {
+      if (e.target.value === '0' || e.target.value === 0) {
+        e.target.value = '';
+        setFormData(prev => ({
+          ...prev,
+          [e.target.name]: ''
+        }));
+      }
+    }
   };
 
   return (
@@ -485,6 +497,7 @@ const PuzzleModal = ({ puzzle, onClose, onSave }) => {
                   name="price"
                   value={formData.price}
                   onChange={handleChange}
+                  onFocus={handleFocus}
                   className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white focus:outline-none focus:border-blue-500"
                   required
                 />
@@ -499,6 +512,7 @@ const PuzzleModal = ({ puzzle, onClose, onSave }) => {
                   name="originalPrice"
                   value={formData.originalPrice}
                   onChange={handleChange}
+                  onFocus={handleFocus}
                   className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white focus:outline-none focus:border-blue-500"
                 />
               </div>

@@ -31,6 +31,19 @@ app.get('/', (req, res)=>{
     res.send("API is running...")
 })
 
+// Global error handler (e.g., Multer, ImageKit, validation)
+// Must be after routes
+app.use((err, req, res, next) => {
+    console.error('Unhandled error:', err);
+    if (err?.name === 'MulterError') {
+        return res.status(400).json({ success: false, message: `Upload error: ${err.message}` });
+    }
+    if (err?.message === 'Not allowed by CORS') {
+        return res.status(403).json({ success: false, message: err.message });
+    }
+    res.status(500).json({ success: false, message: err?.message || 'Internal Server Error' });
+});
+
 app.listen(PORT, ()=>{
     console.log(`Server is running on port ${PORT}`);
 });

@@ -110,14 +110,16 @@ export const AppProvider = ({ children }) => {
     setLoading(true);
     setError(null);
     try {
-      const formData = new FormData();
-      
-      // Append all product data to FormData
-      Object.keys(productData).forEach(key => {
-        if (productData[key] !== undefined && productData[key] !== null) {
-          formData.append(key, productData[key]);
-        }
-      });
+      // Accept either plain object or prebuilt FormData
+      const formData = productData instanceof FormData ? productData : (() => {
+        const fd = new FormData();
+        Object.keys(productData).forEach(key => {
+          if (productData[key] !== undefined && productData[key] !== null) {
+            fd.append(key, productData[key]);
+          }
+        });
+        return fd;
+      })();
 
       const response = await fetch(`${API_BASE_URL}/admin/products`, {
         method: 'POST',
@@ -152,14 +154,16 @@ export const AppProvider = ({ children }) => {
     setLoading(true);
     setError(null);
     try {
-      const formData = new FormData();
-      
-      // Append all product data to FormData
-      Object.keys(productData).forEach(key => {
-        if (productData[key] !== undefined && productData[key] !== null) {
-          formData.append(key, productData[key]);
-        }
-      });
+      // Accept either plain object or prebuilt FormData
+      const formData = productData instanceof FormData ? productData : (() => {
+        const fd = new FormData();
+        Object.keys(productData).forEach(key => {
+          if (productData[key] !== undefined && productData[key] !== null) {
+            fd.append(key, productData[key]);
+          }
+        });
+        return fd;
+      })();
 
       const response = await fetch(`${API_BASE_URL}/admin/products/${productId}`, {
         method: 'PUT',

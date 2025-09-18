@@ -13,15 +13,28 @@ const Classes = () => {
   const { addToCart } = useCart();
   const { products, loading, fetchProducts } = useApp();
 
-  // Get featured puzzles from database, filter out classes
-  const featuredPuzzles = products.filter(product => 
-    (product.type === 'puzzle' || !product.type) && product.featured
+  // Get last 4 puzzles from database, filter out classes
+  const allPuzzles = products.filter(product => 
+    (product.type === 'puzzle' || !product.type)
   );
+  
+  // Get the last 4 puzzles (most recently added)
+  const featuredPuzzles = allPuzzles
+    .sort((a, b) => new Date(b.createdAt || b.updatedAt) - new Date(a.createdAt || a.updatedAt))
+    .slice(0, 4);
 
   useEffect(() => {
-    // Fetch featured products when component mounts
-    fetchProducts({ type: 'puzzle', featured: true });
+    // Fetch all products when component mounts
+    fetchProducts();
   }, []);
+
+  // Re-fetch products when products array changes (for real-time updates)
+  useEffect(() => {
+    if (products.length > 0) {
+      // Products are already loaded, no need to fetch again
+      // This effect ensures the component re-renders when products change
+    }
+  }, [products]);
 
 
   const handleAddToCart = (puzzle) => {

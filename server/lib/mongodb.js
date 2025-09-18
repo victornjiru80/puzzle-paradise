@@ -7,7 +7,10 @@ const connectDB = async ()=>{
         console.log("Database Connected")
     })
     
-    await mongoose.connect(`${process.env.MONGODB_URI}puzzleParadise`)
+    // Use provided URI and explicit dbName to avoid malformed URIs
+    await mongoose.connect(process.env.MONGODB_URI, {
+        dbName: process.env.MONGODB_DB || 'puzzleParadise'
+    })
 };
 
 export default connectDB;

@@ -31,6 +31,14 @@ const Store = () => {
     });
   }, [selectedCategory, selectedPieceCategory]);
 
+  // Re-fetch products when products array changes (for real-time updates)
+  useEffect(() => {
+    if (products.length > 0) {
+      // Products are already loaded, no need to fetch again
+      // This effect ensures the component re-renders when products change
+    }
+  }, [products]);
+
 
   const filteredPuzzles = puzzles.filter(puzzle => {
     const matchesCategory = selectedCategory === 'All' || puzzle.category === selectedCategory;

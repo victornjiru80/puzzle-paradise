@@ -60,13 +60,40 @@ export const createProduct = async (req, res) => {
 
     // Handle image upload if provided
     if (req.file) {
-      const result = await imagekit.upload({
-        file: req.file.buffer,
-        fileName: `${Date.now()}-${req.file.originalname}`,
-        folder: '/puzzle-paradise/products'
-      });
-      imageUrl = result.url;
-      imageId = result.fileId;
+      const hasImageKit = Boolean(
+        process.env.IMAGEKIT_PUBLIC_KEY &&
+        process.env.IMAGEKIT_PRIVATE_KEY &&
+        process.env.IMAGEKIT_URL_ENDPOINT
+      );
+      if (!hasImageKit) {
+        return res.status(400).json({ success: false, message: 'Image upload not configured on server' });
+      }
+      try {
+        const result = await imagekit.upload({
+          file: req.file.buffer,
+          fileName: `${Date.now()}-${req.file.originalname}`,
+          folder: '/puzzle-paradise/products'
+        });
+        imageUrl = result.url;
+        imageId = result.fileId;
+      } catch (uploadErr) {
+        console.error('Image upload failed:', uploadErr);
+        return res.status(502).json({ success: false, message: 'Failed to upload image' });
+      }
+    }
+
+    // Basic validation of required fields
+    const missing = [];
+    if (!title) missing.push('title');
+    if (!description) missing.push('description');
+    if (price === undefined || price === null || price === '') missing.push('price');
+    if (pieces === undefined || pieces === null || pieces === '') missing.push('pieces');
+    if (!category) missing.push('category');
+    if (!difficulty) missing.push('difficulty');
+    if (!imageUrl) missing.push('image');
+
+    if (missing.length > 0) {
+      return res.status(400).json({ success: false, message: `Missing required fields: ${missing.join(', ')}` });
     }
 
     const product = new Product({
@@ -92,6 +119,12 @@ export const createProduct = async (req, res) => {
     await product.save();
     res.status(201).json({ success: true, product });
   } catch (error) {
+    console.error('Create product error:', {
+      message: error.message,
+      stack: error.stack,
+      body: req.body,
+      hasFile: Boolean(req.file)
+    });
     res.status(500).json({ success: false, message: error.message });
   }
 };
