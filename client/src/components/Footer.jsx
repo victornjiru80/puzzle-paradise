@@ -188,7 +188,7 @@ const Footer = () => {
             <div className="space-y-4">
               <div className="flex items-center gap-3">
                 <FiMail className="w-4 h-4 text-blue-400" />
-                <span className="text-gray-400 text-sm">support@puzzleparadise.com</span>
+                <span className="text-gray-400 text-sm">puzzleparadise952@gmail.com</span>
               </div>
               <div className="flex items-center gap-3">
                 <FiPhone className="w-4 h-4 text-blue-400" />
@@ -196,7 +196,7 @@ const Footer = () => {
               </div>
               <div className="flex items-center gap-3">
                 <FiMapPin className="w-4 h-4 text-blue-400" />
-                <span className="text-gray-400 text-sm">123 Puzzle Street, Brain City</span>
+                <span className="text-gray-400 text-sm">Old Namanga road,  Kitengela</span>
               </div>
               <div className="flex items-center gap-3">
                 <FiClock className="w-4 h-4 text-blue-400" />

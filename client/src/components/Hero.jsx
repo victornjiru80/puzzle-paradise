@@ -7,10 +7,10 @@ const Hero = () => {
   const navigate = useNavigate();
   
   const stats = [
-    { icon: Puzzle, label: "Puzzle Types", value: "50+" },
-    { icon: Brain, label: "Brain Teasers", value: "1000+" },
-    { icon: Trophy, label: "Challenges", value: "200+" },
-    { icon: Users, label: "Puzzle Solvers", value: "10K+" },
+    { icon: Puzzle, label: "Puzzle Types", value: "6+" },
+    { icon: Brain, label: "Brain Teasers", value: "10+" },
+    { icon: Trophy, label: "Challenges", value: "20+" },
+    { icon: Users, label: "Puzzle Solvers", value: "50+" },
   ];
 
   return (
@@ -236,7 +236,7 @@ const Hero = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.2 }}
             >
-              Welcome to{" "}
+              <span className="text-white/80">Welcome to</span>{" "}
               <span className="bg-gradient-to-r from-blue-200 to-cyan-200 bg-clip-text text-transparent">
                 Puzzle Paradise
               </span>
@@ -258,12 +258,12 @@ const Hero = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.6 }}
             >
-              <p className="px-6 sm:px-8 py-3 sm:py-4 text-white font-semibold text-sm sm:text-base">
+              <p className="text-gray-300 font-medium text-sm sm:text-base">
                 Start Puzzling Now
               </p>
               <button 
                 onClick={() => navigate('/store')}
-                className="px-6 sm:px-8 py-3 sm:py-4 border-2 border-blue-500 text-blue-400 font-semibold rounded-lg hover:bg-blue-500 hover:text-white transition-all duration-300 transform hover:scale-105 text-sm sm:text-base"
+                className="px-8 sm:px-10 py-3 sm:py-4 bg-gradient-to-r from-blue-600 to-cyan-600 text-white font-semibold rounded-full shadow-lg hover:from-blue-700 hover:to-cyan-700 hover:shadow-xl transition-all duration-300 text-sm sm:text-base ring-1 ring-blue-400/20"
               >
                 Browse Puzzles
               </button>

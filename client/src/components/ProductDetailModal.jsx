@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   X, 
@@ -42,6 +42,17 @@ const ProductDetailModal = ({ puzzle, isOpen, onClose }) => {
     { icon: Award, text: "Premium cardboard construction" },
     { icon: Star, text: "Vibrant, fade-resistant colors" }
   ];
+
+  // Prevent body scroll when modal is open
+  useEffect(() => {
+    if (isOpen) {
+      const { overflow } = document.body.style;
+      document.body.style.overflow = 'hidden';
+      return () => {
+        document.body.style.overflow = overflow || '';
+      };
+    }
+  }, [isOpen]);
 
   return (
     <AnimatePresence>
