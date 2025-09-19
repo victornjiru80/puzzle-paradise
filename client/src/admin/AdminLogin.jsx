@@ -140,13 +140,7 @@ const AdminLogin = ({ onLogin }) => {
             </button>
           </form>
 
-          {/* Demo Credentials */}
-          <div className="mt-6 p-4 bg-blue-500/10 border border-blue-500/20 rounded-lg">
-            <p className="text-blue-400 text-sm text-center mb-2">Create Admin Account First:</p>
-            <p className="text-gray-300 text-xs text-center">
-              Use the server API to create an admin account before logging in
-            </p>
-          </div>
+         
 
           {/* Back to Website */}
           <div className="mt-6 text-center">
