@@ -191,8 +191,8 @@ const AdminDashboard = ({ onLogout }) => {
           </div>
         </div>
 
-        {/* Puzzles Table */}
-        <div className="bg-gray-800 rounded-lg border border-gray-700 overflow-hidden">
+        {/* Puzzles Table - Desktop/Tablet */}
+        <div className="bg-gray-800 rounded-lg border border-gray-700 overflow-hidden hidden md:block">
           <div className="overflow-x-auto">
             <table className="w-full">
               <thead className="bg-gray-700">
@@ -290,6 +290,61 @@ const AdminDashboard = ({ onLogout }) => {
               <h3 className="text-lg font-medium text-white mb-2">No puzzles found</h3>
               <p className="text-gray-400">Try adjusting your search or filter criteria</p>
             </div>
+          )}
+        </div>
+
+        {/* Puzzles List - Mobile */}
+        <div className="md:hidden bg-gray-800 rounded-lg border border-gray-700 overflow-hidden divide-y divide-gray-700">
+          {filteredPuzzles.length === 0 ? (
+            <div className="text-center py-12">
+              <Package className="w-12 h-12 text-gray-500 mx-auto mb-4" />
+              <h3 className="text-lg font-medium text-white mb-2">No puzzles found</h3>
+              <p className="text-gray-400">Try adjusting your search or filter criteria</p>
+            </div>
+          ) : (
+            filteredPuzzles.map((puzzle) => (
+              <div key={puzzle._id} className="px-4 py-3">
+                <div className="flex items-start justify-between gap-3">
+                  <div className="min-w-0">
+                    <div className="text-sm font-medium text-white truncate">{puzzle.title}</div>
+                    <div className="text-xs text-gray-400 truncate">{puzzle.category} • {puzzle.pieces} pcs</div>
+                    <div className="text-xs text-gray-300">KES {puzzle.price.toLocaleString()}</div>
+                    <div className="mt-1 flex items-center gap-2">
+                      <span className={`inline-flex px-2 py-0.5 text-[10px] font-semibold rounded-full ${
+                        puzzle.inStock ? 'bg-green-500/10 text-green-400' : 'bg-red-500/10 text-red-400'
+                      }`}>
+                        {puzzle.inStock ? 'In Stock' : 'Out of Stock'}
+                      </span>
+                      {puzzle.featured && (
+                        <span className="inline-flex px-2 py-0.5 text-[10px] font-semibold rounded-full bg-yellow-500/10 text-yellow-400">
+                          Featured
+                        </span>
+                      )}
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-2 flex-shrink-0">
+                    <button
+                      onClick={() => setEditingPuzzle(puzzle)}
+                      className="p-2 text-blue-400 hover:text-blue-300 hover:bg-blue-500/10 rounded-lg transition-colors"
+                      aria-label="Edit puzzle"
+                    >
+                      <Edit3 className="w-4 h-4" />
+                    </button>
+                    <button
+                      onClick={async () => {
+                        if (window.confirm('Are you sure you want to delete this puzzle?')) {
+                          await deleteProduct(puzzle._id);
+                        }
+                      }}
+                      className="p-2 text-red-400 hover:text-red-300 hover:bg-red-500/10 rounded-lg transition-colors"
+                      aria-label="Delete puzzle"
+                    >
+                      <Trash2 className="w-4 h-4" />
+                    </button>
+                  </div>
+                </div>
+              </div>
+            ))
           )}
         </div>
       </div>

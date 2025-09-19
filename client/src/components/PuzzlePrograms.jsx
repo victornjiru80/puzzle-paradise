@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import {  Brain, Clock, Users, Target, Star, Zap } from "lucide-react";
+import {  Clock, Users, MessageCircle, HeartHandshake, Calendar, Share2 } from "lucide-react";
 
 const PuzzlePrograms = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -8,61 +8,61 @@ const PuzzlePrograms = () => {
   const programs = [
     {
       id: 1,
-      title: "Elite Brain Training",
-      subtitle: "Advanced Cognitive Enhancement",
-      description: "Master complex puzzles with our intensive brain training program. Designed for serious puzzle enthusiasts who want to push their cognitive limits.",
-      features: ["Advanced Logic Puzzles", "Memory Enhancement", "Pattern Recognition", "Speed Training"],
-      duration: "12 weeks",
-      level: "Advanced",
-      iconName: "brain",
+      title: "Meet & Solve Nights",
+      subtitle: "Weekly Community Sessions",
+      description: "Join fellow puzzle lovers every week for relaxed, fun, and collaborative puzzle-solving sessions.",
+      features: ["Group Solving", "Tips & Tricks", "New Friends", "Snacks & Vibes"],
+      duration: "Every Friday",
+      level: "All Welcome",
+      iconName: "calendar",
       image: "/api/placeholder/600/400",
       color: "from-blue-500 to-cyan-500"
     },
     {
       id: 2,
-      title: "Speed Puzzle Mastery",
-      subtitle: "Lightning-Fast Problem Solving",
-      description: "Develop lightning-fast puzzle-solving skills with timed challenges and competitive training modules.",
-      features: ["Speed Challenges", "Time Management", "Quick Thinking", "Competitive Play"],
-      duration: "8 weeks",
-      level: "Intermediate",
-      iconName: "zap",
+      title: "Community Challenges",
+      subtitle: "Friendly Competitions",
+      description: "Participate in monthly community challenges and win fun prizes while leveling up your skills.",
+      features: ["Monthly Themes", "Leaderboards", "Team Play", "Prizes"],
+      duration: "Monthly",
+      level: "All Levels",
+      iconName: "users",
       image: "/api/placeholder/600/400",
       color: "from-cyan-500 to-blue-600"
     },
     {
       id: 3,
-      title: "Mind Gym Fundamentals",
-      subtitle: "Build Your Puzzle Foundation",
-      description: "Perfect for beginners! Learn the fundamentals of puzzle solving with structured lessons and progressive difficulty.",
-      features: ["Basic Techniques", "Foundation Building", "Progressive Learning", "Guided Practice"],
-      duration: "6 weeks",
-      level: "Beginner",
-      iconName: "target",
+      title: "Online Hangouts",
+      subtitle: "Discord & Socials",
+      description: "Chat daily, share progress, and drop your best solves in our active online community.",
+      features: ["24/7 Chat", "Photo Shares", "Solve Help", "Memes Allowed"],
+      duration: "Anytime",
+      level: "Everyone",
+      iconName: "message",
       image: "/api/placeholder/600/400",
       color: "from-blue-600 to-indigo-500"
     },
     {
       id: 4,
-      title: "Puzzle Community Challenge",
-      subtitle: "Team-Based Brain Training",
-      description: "Join our community challenges and solve puzzles together. Perfect for building teamwork and social puzzle-solving skills.",
-      features: ["Team Challenges", "Community Events", "Social Learning", "Group Competitions"],
+      title: "Volunteer & Share",
+      subtitle: "Give Back to the Community",
+      description: "Donate an old puzzle, help newcomers, or host a micro-session. Grow the community together!",
+      features: ["Donate Puzzles", "Mentor Newcomers", "Host Minis", "Share Resources"],
       duration: "Ongoing",
       level: "All Levels",
-      iconName: "users",
+      iconName: "share",
       image: "/api/placeholder/600/400",
       color: "from-indigo-500 to-purple-500"
     },
     {
       id: 5,
-      title: "Premium Puzzle Academy",
-      subtitle: "Exclusive Elite Training",
-      description: "Our most comprehensive program with personalized coaching, exclusive puzzles, and advanced analytics.",
-      features: ["Personal Coach", "Exclusive Content", "Advanced Analytics", "Priority Support"],
-      duration: "16 weeks",
-      level: "Premium",
-      iconName: "star",
+      title: "Buddy System",
+      subtitle: "Find Your Puzzle Partner",
+      description: "Match with puzzle buddies at your level for regular duo sessions and shared goals.",
+      features: ["Skill Match", "Consistency", "Fun Goals", "Accountability"],
+      duration: "Ongoing",
+      level: "All Levels",
+      iconName: "heart",
       image: "/api/placeholder/600/400",
       color: "from-purple-500 to-pink-500"
     }
@@ -71,13 +71,13 @@ const PuzzlePrograms = () => {
   // Icon mapping
   const getIcon = (iconName) => {
     const icons = {
-      brain: Brain,
-      zap: Zap,
-      target: Target,
       users: Users,
-      star: Star
+      message: MessageCircle,
+      heart: HeartHandshake,
+      calendar: Calendar,
+      share: Share2
     };
-    return icons[iconName] || Brain;
+    return icons[iconName] || Users;
   };
 
   // Auto-advance slides
@@ -115,13 +115,13 @@ const PuzzlePrograms = () => {
           className="text-center mb-16"
         >
           <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
-            Elite Puzzle{" "}
+            Join Our{" "}
             <span className="bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent">
-              Training Programs
+              Puzzle Community
             </span>
           </h2>
           <p className="text-xl text-gray-300 max-w-3xl mx-auto">
-            Transform your puzzle-solving abilities with our comprehensive training programs designed by puzzle masters.
+            Meet puzzle lovers, team up for challenges, and share your best solves online and offline.
           </p>
         </motion.div>
 
@@ -170,21 +170,21 @@ const PuzzlePrograms = () => {
                       ))}
                     </div>
 
-                    {/* Program Info */}
+                    {/* Community Info */}
                     <div className="flex items-center gap-6 mb-8">
                       <div className="flex items-center">
                         <Clock className="w-5 h-5 text-blue-400 mr-2" />
                         <span className="text-gray-300 text-sm">{programs[currentSlide].duration}</span>
                       </div>
                       <div className="flex items-center">
-                        <Target className="w-5 h-5 text-blue-400 mr-2" />
+                        <Users className="w-5 h-5 text-blue-400 mr-2" />
                         <span className="text-gray-300 text-sm">{programs[currentSlide].level}</span>
                       </div>
                     </div>
 
                     {/* CTA Button */}
                     <button className="px-8 py-4 bg-gradient-to-r from-blue-600 to-cyan-600 text-white font-semibold rounded-lg hover:from-blue-700 hover:to-cyan-700 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl w-fit">
-                      Start Training
+                      Join the Community
                     </button>
                   </div>
 
@@ -193,8 +193,8 @@ const PuzzlePrograms = () => {
                     <div className={`absolute inset-0 bg-gradient-to-br ${programs[currentSlide].color} opacity-20`}></div>
                     <div className="relative z-10 text-center">
                       {React.createElement(getIcon(programs[currentSlide].iconName), { className: "w-32 h-32 text-white/30 mx-auto mb-4" })}
-                      <p className="text-white/50 text-sm">Image placeholder</p>
-                      <p className="text-white/30 text-xs mt-2">You can add your puzzle images here</p>
+                      <p className="text-white/50 text-sm">Community vibes</p>
+                      <p className="text-white/30 text-xs mt-2">Add photos from meetups or online events</p>
                     </div>
                   </div>
                 </div>

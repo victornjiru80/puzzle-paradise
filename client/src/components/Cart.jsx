@@ -96,7 +96,7 @@ const Cart = ({ isOpen, onClose }) => {
                         {/* Product Image */}
                         <div className="w-16 h-16 bg-gray-600 rounded-lg overflow-hidden flex-shrink-0">
                           <img
-                            src="/api/placeholder/64/64"
+                            src={item.image || '/logo.jpg'}
                             alt={item.title}
                             className="w-full h-full object-cover"
                           />

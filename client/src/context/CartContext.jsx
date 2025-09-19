@@ -74,7 +74,17 @@ export const CartProvider = ({ children }) => {
   }, [state.items]);
 
   const addToCart = (puzzle) => {
-    dispatch({ type: 'ADD_TO_CART', payload: puzzle });
+    // Normalize incoming product shape for cart usage
+    const normalized = {
+      id: puzzle.id || puzzle._id,
+      title: puzzle.title,
+      price: puzzle.price,
+      pieces: puzzle.pieces,
+      difficulty: puzzle.difficulty,
+      image: puzzle.image,
+      quantity: puzzle.quantity || 1
+    };
+    dispatch({ type: 'ADD_TO_CART', payload: normalized });
   };
 
   const removeFromCart = (puzzleId) => {
