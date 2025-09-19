@@ -8,7 +8,6 @@ import {
   FaTiktok,
 } from "react-icons/fa";
 import { FiMail, FiPhone, FiMapPin, FiClock } from "react-icons/fi";
-import { Puzzle } from "lucide-react";
 import { BsArrowUpCircle } from "react-icons/bs";
 
 const Footer = () => {
@@ -33,17 +32,37 @@ const Footer = () => {
       name: "Facebook",
       icon: FaFacebookF,
       href: "#",
-      color: "hover:bg-blue-600",
+      bg: "bg-[#1877F2]",
+      hover: "hover:bg-[#0d5bd6]",
     },
     {
       name: "Instagram",
       icon: FaInstagram,
-      href: "#",
-      color: "hover:bg-pink-600",
+      href: "https://www.instagram.com/_puzzleparadise?igsh=dXVydDNrMXI2bzM4",
+      bg: "bg-gradient-to-br from-[#F58529] via-[#DD2A7B] to-[#8134AF]",
+      hover: "hover:opacity-90",
     },
-    { name: "Twitter", icon: FaTwitter, href: "#", color: "hover:bg-sky-500" },
-    { name: "YouTube", icon: FaYoutube, href: "#", color: "hover:bg-red-600" },
-    { name: "TikTok", icon: FaTiktok, href: "#", color: "hover:bg-slate-800" },
+    { 
+      name: "Twitter", 
+      icon: FaTwitter, 
+      href: "", 
+      bg: "bg-sky-500",
+      hover: "hover:bg-sky-600" 
+    },
+    { 
+      name: "YouTube", 
+      icon: FaYoutube, 
+      href: "https://youtube.com/@dzidzapuzzles3634?si=yl0Psn9hylVaMUXw", 
+      bg: "bg-[#FF0000]",
+      hover: "hover:bg-[#cc0000]" 
+    },
+    { 
+      name: "TikTok", 
+      icon: FaTiktok, 
+      href: "https://www.tiktok.com/@puzzleparadise1?_t=ZM-8zqyE1lQsem&_r=1", 
+      bg: "bg-[#000000]",
+      hover: "hover:bg-[#111111]" 
+    },
   ];
 
   const scrollToTop = () => {
@@ -103,8 +122,7 @@ const Footer = () => {
                   href={social.href}
                   whileHover={{ scale: 1.1 }}
                   whileTap={{ scale: 0.9 }}
-                  className={`w-8 h-8 rounded-lg ${social.color} bg-zinc-800/50 flex items-center justify-center
-                            transition-colors duration-300`}
+                  className={`w-8 h-8 rounded-lg ${social.bg} ${social.hover} flex items-center justify-center transition-colors duration-300`}
                 >
                   <social.icon className="w-4 h-4 text-white" />
                 </motion.a>

@@ -29,7 +29,7 @@ const ContactForm = () => {
     {
       icon: Mail,
       title: "Email Us",
-      content: "support@puzzleparadise.com",
+      content: "puzzleparadise952@gmail.com",
       description: "Get help with puzzles or account issues"
     },
     {
@@ -41,8 +41,8 @@ const ContactForm = () => {
     {
       icon: MapPin,
       title: "Visit Us",
-      content: "123 Puzzle Street, Brain City, BC 12345",
-      description: "Our puzzle headquarters"
+      content: "Old Namanga Road, Kitengela",
+      description: "Next to Zion Ville Apartments, shop no.6"
     }
   ];
 
