@@ -70,7 +70,7 @@ export const createProduct = async (req, res) => {
       }
       try {
         const result = await imagekit.upload({
-          file: req.file.buffer,
+          file: req.file.buffer,  // Use buffer directly
           fileName: `${Date.now()}-${req.file.originalname}`,
           folder: '/puzzle-paradise/products'
         });

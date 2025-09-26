@@ -45,13 +45,14 @@ const ProductDetailModal = ({ puzzle, isOpen, onClose }) => {
 
   // Prevent body scroll when modal is open
   useEffect(() => {
-    if (isOpen) {
+    //if (!isOpen) return;
+    
       const { overflow } = document.body.style;
       document.body.style.overflow = 'hidden';
       return () => {
         document.body.style.overflow = overflow || '';
       };
-    }
+    
   }, [isOpen]);
 
   return (

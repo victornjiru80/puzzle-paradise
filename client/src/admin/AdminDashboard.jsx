@@ -26,7 +26,6 @@ const AdminDashboard = ({ onLogout }) => {
   
   const { 
     products, 
-    loading, 
     fetchProducts, 
     createProduct, 
     updateProduct, 

@@ -46,10 +46,10 @@ const Classes = () => {
     setIsModalOpen(true);
   };
 
-  const handleViewDetails = (puzzleId) => {
+  //const handleViewDetails = (puzzleId) => {
     // Navigate to puzzle details - you can implement this later
-    console.log('View details for puzzle:', puzzleId);
-  };
+    //console.log('View details for puzzle:', puzzleId);
+  //};
 
   return (
     <section id="puzzles" className="py-20 bg-gray-900 relative overflow-hidden">
@@ -62,7 +62,7 @@ const Classes = () => {
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
+          viewport={{ once: true }}   // Ensure animation triggers only once
           transition={{ duration: 0.8 }}
           className="text-center mb-16"
         >
@@ -81,7 +81,7 @@ const Classes = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {loading ? (
             // Loading skeleton
-            Array.from({ length: 4 }).map((_, index) => (
+            Array.from({ length: 4 }).map((_, index) => (  
               <div key={index} className="bg-gray-800/50 backdrop-blur-sm border border-gray-700 rounded-xl overflow-hidden animate-pulse">
                 <div className="aspect-[4/3] bg-gray-700"></div>
                 <div className="p-4 space-y-3">
@@ -161,7 +161,7 @@ const Classes = () => {
                   <div className="flex gap-2">
                     <button
                       onClick={(e) => {
-                        e.stopPropagation();
+                        e.stopPropagation();  // Prevent triggering puzzle click
                         handleAddToCart(puzzle);
                       }}
                       disabled={!puzzle.inStock}

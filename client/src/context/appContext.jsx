@@ -40,7 +40,7 @@ export const AppProvider = ({ children }) => {
   // Admin login
   const adminLogin = async (credentials) => {
     setLoading(true);
-    setError(null);
+    setError(null);  // Clear previous errors
     try {
       const response = await fetch(`${API_BASE_URL}/admin/login`, {
         method: 'POST',
@@ -64,6 +64,7 @@ export const AppProvider = ({ children }) => {
       }
     } catch (err) {
       const errorMsg = 'Failed to login';
+      console.error(err)
       setError(errorMsg);
       return { success: false, message: errorMsg };
     } finally {
@@ -86,7 +87,7 @@ export const AppProvider = ({ children }) => {
     try {
       const response = await fetch(`${API_BASE_URL}/admin/verify`, {
         headers: {
-          'Authorization': `Bearer ${token}`,
+          'Authorization': `Bearer ${token}`,   
         },
       });
       
@@ -101,6 +102,7 @@ export const AppProvider = ({ children }) => {
       }
     } catch (err) {
       adminLogout();
+      console.error('Error verifying admin:', err);
       return false;
     }
   };
@@ -143,6 +145,7 @@ export const AppProvider = ({ children }) => {
     } catch (err) {
       const errorMsg = 'Failed to create product';
       setError(errorMsg);
+      console.error('Create product error:', err);
       return { success: false, message: errorMsg };
     } finally {
       setLoading(false);
@@ -186,6 +189,7 @@ export const AppProvider = ({ children }) => {
       }
     } catch (err) {
       const errorMsg = 'Failed to update product';
+      console.error('Update product error:', err);
       setError(errorMsg);
       return { success: false, message: errorMsg };
     } finally {
@@ -218,6 +222,7 @@ export const AppProvider = ({ children }) => {
       }
     } catch (err) {
       const errorMsg = 'Failed to delete product';
+      console.error('Delete product error:', err);
       setError(errorMsg);
       return { success: false, message: errorMsg };
     } finally {

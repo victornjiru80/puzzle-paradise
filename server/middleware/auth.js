@@ -13,5 +13,6 @@ export const authenticateAdmin = (req, res, next) => {
     next();
   } catch (error) {
     res.status(401).json({ success: false, message: 'Invalid token' });
+    console.error('Authentication error:', error);
   }
 };

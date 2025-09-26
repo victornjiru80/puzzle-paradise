@@ -13,7 +13,7 @@ const AdminLogin = ({ onLogin }) => {
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
-  const { adminLogin, loading, error: appError } = useApp();
+  const { adminLogin, error: appError } = useApp();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -30,6 +30,7 @@ const AdminLogin = ({ onLogin }) => {
       }
     } catch (err) {
       setError('Login failed. Please try again.');
+      console.error('Login error:', err);
     } finally {
       setIsLoading(false);
     }

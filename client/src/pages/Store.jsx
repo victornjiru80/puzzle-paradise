@@ -74,9 +74,9 @@ const Store = () => {
     setIsModalOpen(true);
   };
 
-  const handleViewDetails = (puzzleId) => {
-    console.log('View details for puzzle:', puzzleId);
-  };
+ // const handleViewDetails = (puzzleId) => {
+   // console.log('View details for puzzle:', puzzleId);
+  //};
 
   return (
     <div className="min-h-screen bg-gray-900 pt-20">

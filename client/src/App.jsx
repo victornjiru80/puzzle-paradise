@@ -10,7 +10,8 @@ import { CartProvider } from "./context/CartContext";
 import { AppProvider } from "./context/appContext";
 
 function App() {
-  const [isAdminAuthenticated, setIsAdminAuthenticated] = useState(true);
+  const [isAdminAuthenticated, setIsAdminAuthenticated] = useState(false);
+  
 
   useEffect(() => {
     const authStatus = localStorage.getItem('isAdminAuthenticated');
@@ -20,6 +21,7 @@ function App() {
   const handleAdminLogin = () => {
     setIsAdminAuthenticated(true);
   };
+  console.log(isAdminAuthenticated);
 
   const handleAdminLogout = () => {
     setIsAdminAuthenticated(false);

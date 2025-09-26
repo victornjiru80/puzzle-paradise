@@ -1,4 +1,3 @@
-import React from "react";
 import { motion } from "framer-motion";
 import { Puzzle, Brain, Trophy, Users } from "lucide-react";
 import { useNavigate } from "react-router-dom";

@@ -88,13 +88,13 @@ const PuzzlePrograms = () => {
     return () => clearInterval(timer);
   }, [programs.length]);
 
-  const nextSlide = () => {
-    setCurrentSlide((prev) => (prev + 1) % programs.length);
-  };
+  //const nextSlide = () => {
+    //setCurrentSlide((prev) => (prev + 1) % programs.length);
+  //};
 
-  const prevSlide = () => {
-    setCurrentSlide((prev) => (prev - 1 + programs.length) % programs.length);
-  };
+  //const prevSlide = () => {
+    //setCurrentSlide((prev) => (prev - 1 + programs.length) % programs.length);
+  //};
 
   const goToSlide = (index) => {
     setCurrentSlide(index);

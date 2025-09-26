@@ -1,6 +1,6 @@
 import multer from 'multer';
 
-// Configure multer for memory storage (we'll upload to ImageKit)
+// Configure multer for memory storage ( uploaded to ImageKit)
 const storage = multer.memoryStorage();
 
 const fileFilter = (req, file, cb) => {

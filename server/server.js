@@ -38,12 +38,12 @@ app.use(express.urlencoded({ extended: true }));
 app.use('/api', routes);
 
 app.get('/', (req, res)=>{
-    res.send("API is running...")
-})
+    res.send("API is running...");
+});
 
 // Global error handler (e.g., Multer, ImageKit, validation)
 // Must be after routes
-app.use((err, req, res, next) => {
+app.use((err, req, res) => {
     console.error('Unhandled error:', err);
     if (err?.name === 'MulterError') {
         return res.status(400).json({ success: false, message: `Upload error: ${err.message}` });
